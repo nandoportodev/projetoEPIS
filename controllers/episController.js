@@ -1,19 +1,22 @@
+// controllers/episController.js
 const database = require('../database');
 
 exports.cadastrarEPI = async (req, res) => {
-    const { nome, id } = req.body;
+    const { nome, quantidade, codigo } = req.body;
     try {
-        await database.query('INSERT INTO epis (nome, id) VALUES ($1, $2)', [nome, id]);
-        res.status(201).json({ status: 'EPI cadastrado com sucesso!' });
+        const query = 'INSERT INTO epis (nome, quantidade, codigo) VALUES ($1, $2, $3)';
+        await database.query(query, [nome, quantidade, codigo]);
+        res.status(201).json({ message: "EPI adicionado com sucesso." });
     } catch (error) {
-        console.error('Erro ao cadastrar EPI:', error);
-        res.status(500).json({ status: 'Erro ao cadastrar EPI. Por favor, tente novamente mais tarde.' });
+        console.log(error);
+        res.status(500).json({ message: "Erro ao adicionar EPI." });
     }
 };
 
 exports.listarEPIs = async (req, res) => {
     try {
-        const result = await database.query('SELECT * FROM epis');
+        const query = 'SELECT * FROM epis';
+        const result = await database.query(query);
         res.status(200).json({ epis: result.rows });
     } catch (error) {
         console.error('Erro ao listar EPIs:', error);

@@ -22,4 +22,19 @@ exports.listarEPIs = async (req, res) => {
         console.error('Erro ao listar EPIs:', error);
         res.status(500).json({ status: 'Erro ao listar EPIs. Por favor, tente novamente mais tarde.' });
     }
+
+    
+
+};
+
+exports.removerEPI = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const query = 'DELETE FROM epis WHERE id = $1';
+        await database.query(query, [id]);
+        res.status(200).json({ message: 'EPI removido com sucesso.' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Erro ao remover EPI.' });
+    }
 };

@@ -3,7 +3,7 @@ const router = express.Router();
 const colaboradoresController = require('../controllers/colaboradoresController');
 
 
-router.post('/cadastrar', colaboradoresController.cadastrarColaborador);
+router.post('/', colaboradoresController.cadastrarColaborador);
 router.get('/listar', colaboradoresController.listarColaboradores);
 router.delete('/:id', colaboradoresController.removerColaborador);
 
